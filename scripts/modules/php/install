@@ -14,3 +14,6 @@ else
 	echo "PHP version not supported. $DOCKER_PHP_VERSION"
 	exit 1
 fi
+
+# Install composer
+(cd /tmp && /docker/scripts/modules/php/get-composer && mv composer.phar /usr/local/bin/composer)
