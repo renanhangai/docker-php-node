@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Install sudo
+apt-get install -y sudo
+
+# Setup user
+passwd -d root
+groupadd --non-unique --gid 0 me
+useradd  --non-unique --gid 0 --uid 0 me
+echo "\nme ALL=(ALL) NOPASSWD: ALL\n" >> /etc/sudoers && cat /etc/sudoers
+sed -i "/secure_path/c\Defaults secure_path=\"$PATH\"" /etc/sudoers

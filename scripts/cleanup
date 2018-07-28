@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Cleanup modules
-for module in ${DOCKER_MODULES[@]}; do
+for module in ${BUILD_MODULES[@]}; do
 	script="/docker/scripts/modules/${module}/cleanup"
 	if [ -f "$script" ]; then
 		echo "Performing cleanup for $module"

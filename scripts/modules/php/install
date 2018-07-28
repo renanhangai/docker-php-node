@@ -6,12 +6,12 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C
 apt-get update
 
 # Check
-if [ "$DOCKER_PHP_VERSION" == "7.1" ]; then
+if [ "$BUILD_PHP_VERSION" == "7.1" ]; then
 	apt-get install -y php7.1-cli php7.1-fpm
 	mkdir -p /var/run/php
 	ln -s /var/run/php/php7.1-fpm.sock /var/run/php/php-fpm.sock
 else
-	echo "PHP version not supported. $DOCKER_PHP_VERSION"
+	echo "PHP version not supported. $BUILD_PHP_VERSION"
 	exit 1
 fi
 
