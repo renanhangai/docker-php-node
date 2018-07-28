@@ -1,0 +1,22 @@
+#!/bin/bash
+
+docker-image-check-permission() {
+	BUILD_PERMISSION_FILE_UID=10001
+	BUILD_PERMISSION_FILE_GID=10001
+	if [ -f "$BUILD_PERMISSION_FILE" ]; then
+		BUILD_PERMISSION_FILE_UID=$(stat -c "%u" "$BUILD_PERMISSION_FILE")
+		BUILD_PERMISSION_FILE_GID=$(stat -c "%g" "$BUILD_PERMISSION_FILE")
+	fi
+	if [ "${BUILD_PERMISSION_FILE_UID}" != "$(id -u me)" ] || [ "${BUILD_PERMISSION_FILE_GID}" != "$(id -g me)" ]; then
+		userdel -f me
+		groupdel -f me
+		groupadd --gid "${BUILD_PERMISSION_FILE_GID}" me
+		useradd --uid "${BUILD_PERMISSION_FILE_UID}" --gid "${BUILD_PERMISSION_FILE_GID}" me
+		passwd -d me
+		chown -R me:me /home/me
+	fi
+
+	echo "Permissions: $BUILD_PERMISSION_FILE_UID:$BUILD_PERMISSION_FILE_GID";
+}
+
+docker-image-check-permission

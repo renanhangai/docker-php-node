@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo cp /docker/etc/http/default /etc/nginx/sites-available/default
-sudo service nginx start
+cp /docker/etc/http/default /etc/nginx/sites-available/default
+service nginx start

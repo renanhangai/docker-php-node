@@ -15,4 +15,4 @@ for filename in /docker/etc/entry.d/*; do
 done
 
 # Execute command
-exec "$@"
+sudo -H -u me /bin/bash -c "$@"
