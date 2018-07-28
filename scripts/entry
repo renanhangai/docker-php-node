@@ -10,9 +10,10 @@ for module in ${BUILD_MODULES[@]}; do
 done
 
 # Entry configuration files
+shopt -s nullglob
 for filename in /docker/etc/entry.d/*; do
-	("$filename")
+	(chmod +x "$filename" && "$filename")
 done
 
 # Execute command
-sudo -H -u me /bin/bash -c "$@"
+sudo -i -H -u me -- $@
