@@ -14,12 +14,17 @@ for module in ${BUILD_MODULES[@]}; do
 	fi
 done
 
+# Function to run as user
+run-user() {
+	sudo -i -H -E -u me -- $@
+}
+
 # Entry configuration files
 shopt -s nullglob
 for filename in /docker/etc/entry.d/*; do
-	(chmod +x "$filename" && "$filename")
+	(chmod +x "$filename" && run-user "$filename")
 done
 
 # Execute command
 echo "Running '$@'"
-sudo -i -H -E -u me -- $@
+run-user $@
