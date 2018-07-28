@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Entry required modules
+for module in ${DOCKER_MODULES[@]}; do
+	script="/docker/scripts/modules/${module}/entry"
+	if [ -f "$script" ]; then
+		echo "Setupping $module entry"
+		"$script"
+	fi
+done
+
+exec "$@"

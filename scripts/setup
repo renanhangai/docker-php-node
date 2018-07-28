@@ -1,7 +1,29 @@
-#/bin/bash
+#!/bin/bash
 
+# Check if modules exists
+for module in ${DOCKER_MODULES[@]}; do
+	module_dir="/docker/scripts/modules/${module}"
+	if [ ! -d "$module_dir" ]; then
+		echo "Invalid module $module"
+		exit 1
+	fi
+done
+
+# Create runtime dir
+mkdir -p /docker/runtime
+
+# Update and install base packages
 apt-get update
 apt-get install -y \
 	ca-certificates \
 	curl \
 	gnupg
+
+# Install required modules
+for module in ${DOCKER_MODULES[@]}; do
+	script="/docker/scripts/modules/${module}/install"
+	if [ -f "$script" ]; then
+		echo "Installing $module"
+		"$script"
+	fi
+done

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" >> /etc/apt/sources.list.d/ondrej-php.list
+echo "deb-src http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" >> /etc/apt/sources.list.d/ondrej-php.list
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C
+apt-get update
+
+# Check
+if [ "$1" == "7.1" ]; then
+	apt-get install php7.1
+fi
