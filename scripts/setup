@@ -9,8 +9,8 @@ for module in ${DOCKER_MODULES[@]}; do
 	fi
 done
 
-# Create runtime dir
-mkdir -p /docker/runtime
+# Create dirs
+mkdir -p /docker/etc/entry.d
 
 # Update and install base packages
 apt-get update

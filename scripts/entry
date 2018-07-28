@@ -9,4 +9,10 @@ for module in ${DOCKER_MODULES[@]}; do
 	fi
 done
 
+# Entry configuration files
+for filename in /docker/etc/entry.d/*; do
+	("$filename")
+done
+
+# Execute command
 exec "$@"
