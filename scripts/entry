@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Run as sudo
+if [ "$(id -u)" != "0" ]; then
+	exec sudo -H -E -- "$0" "$*"
+fi
+
 # Entry required modules
 for module in ${BUILD_MODULES[@]}; do
 	script="/docker/scripts/modules/${module}/entry"
@@ -16,4 +21,5 @@ for filename in /docker/etc/entry.d/*; do
 done
 
 # Execute command
-sudo -i -H -u me -- $@
+echo "Running '$@'"
+sudo -i -H -E -u me -- $@

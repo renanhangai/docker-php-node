@@ -13,7 +13,8 @@ RUN chmod -R +x /docker/scripts/* && \
 	/docker/scripts/setup && \
 	/docker/scripts/cleanup
 
-WORKDIR /var/www/html
 ENTRYPOINT [ "/docker/scripts/entry" ]
 CMD [ "tail", "-f", "/dev/null" ]
+
 USER me:me
+WORKDIR /app/local
