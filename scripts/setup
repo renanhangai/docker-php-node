@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Setup for apt-get
+export DEBIAN_FRONTEND=noninteractive
+
 # Check if modules exists
 for module in ${BUILD_MODULES[@]}; do
 	module_dir="/docker/scripts/modules/${module}"
@@ -15,7 +18,7 @@ mkdir -p /app/local
 
 # Update and install base packages
 apt-get update
-apt-get install -y \
+apt-get install --no-install-recommends -y \
 	ca-certificates \
 	curl \
 	gnupg
