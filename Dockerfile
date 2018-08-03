@@ -14,7 +14,7 @@ RUN chmod -R +x /docker/scripts/* && \
 	/docker/scripts/cleanup
 
 ENTRYPOINT [ "/docker/scripts/entry" ]
-CMD [ "tail", "-f", "/dev/null" ]
+CMD [ "sudo", "tail", "-F", "/var/log/nginx/error.log" ]
 
 USER me:me
 WORKDIR /app/local
