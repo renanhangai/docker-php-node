@@ -1,5 +1,6 @@
 #!/bin/bash
 
 if [ "$BUILD_PHP_VERSION" == "7.1" ]; then
+	cp /docker/etc/php/php.ini /etc/php/7.1/fpm/conf.d/50-php.ini
 	service php7.1-fpm start
 fi
