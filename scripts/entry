@@ -3,6 +3,7 @@
 # Run as sudo
 if [ "$(id -u)" != "0" ]; then
 	exec sudo -H -E -- "$0" "$*"
+	exit
 fi
 
 # Entry required modules
@@ -16,7 +17,7 @@ done
 
 # Function to run as user
 run-user() {
-	sudo -i -H -E -u me -- $@
+	sudo -H -E -u me -- $@
 }
 
 # Entry configuration files
