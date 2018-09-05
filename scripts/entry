@@ -22,7 +22,8 @@ run-user() {
 
 # Entry configuration files
 shopt -s nullglob
-for filename in /docker/etc/entry.d/*; do
+mkdir -p "${BUILD_ETC_DIR}/entry.d"
+for filename in "${BUILD_ETC_DIR}/entry.d"/*; do
 	(run-user /bin/bash "$filename")
 done
 

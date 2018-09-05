@@ -6,6 +6,7 @@ ARG BUILD_MODULES="user node http php"
 ENV BUILD_PHP_VERSION $BUILD_PHP_VERSION
 ENV BUILD_MODULES $BUILD_MODULES
 ENV BUILD_PERMISSION_FILE "/app/local/package.json"
+ENV BUILD_ETC_DIR "/docker/etc/"
 
 ADD ./scripts /docker/scripts
 ADD ./etc /docker/etc

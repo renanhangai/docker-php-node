@@ -13,7 +13,6 @@ for module in ${BUILD_MODULES[@]}; do
 done
 
 # Create dirs
-mkdir -p /docker/etc/entry.d
 mkdir -p /app/local
 
 # Update and install base packages
