@@ -14,7 +14,7 @@ RUN chmod -R +x /docker/scripts/* && \
 	/docker/scripts/setup && \
 	/docker/scripts/cleanup
 
-ENTRYPOINT [ "/docker/scripts/entry" ]
+ENTRYPOINT [ "dumb-init", "--", "/docker/scripts/entry" ]
 CMD [ "sudo", "tail", "-F", "-n0", "/var/log/nginx/error.log" ]
 
 USER me:me
