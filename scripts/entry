@@ -6,8 +6,17 @@ if [ "$(id -u)" != "0" ]; then
 	exit
 fi
 
-# Entry required modules
+# Prepare modules
 for module in ${BUILD_MODULES[@]}; do
+	script="/docker/scripts/modules/${module}/prepare"
+	if [ -f "$script" ]; then
+		echo "Preparing $module entry"
+		"$script"
+	fi
+done
+
+# Entry required modules
+for module in ${BUILD_RUN_MODULES[@]}; do
 	script="/docker/scripts/modules/${module}/entry"
 	if [ -f "$script" ]; then
 		echo "Setupping $module entry"
