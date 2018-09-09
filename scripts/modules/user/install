@@ -8,6 +8,6 @@ passwd -d root
 groupadd me
 useradd  -g me me
 passwd -d me
-echo "\nme ALL=(ALL) NOPASSWD: ALL\n" >> /etc/sudoers && cat /etc/sudoers
+echo -e "\nme ALL=(ALL) NOPASSWD: ALL\n" | tee -a /etc/sudoers
 sed -i "/secure_path/c\Defaults secure_path=\"$PATH\"" /etc/sudoers
 mkdir -p /home/me 
