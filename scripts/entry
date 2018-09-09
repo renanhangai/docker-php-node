@@ -6,6 +6,22 @@ if [ "$(id -u)" != "0" ]; then
 	exit
 fi
 
+# Function to run as user
+run-user() {
+	sudo -H -E -u me -- $@
+}
+
+# Directory for configuration files
+if [ -n "$BUILD_ETC_DIR" ]; then
+	echo "BUILD_ETC_DIR is deprecated - Please use APP_ETC_DIR";
+	APP_ETC_DIR="$BUILD_ETC_DIR";
+fi
+# Modules to be run
+if [ -n "$BUILD_RUN_MODULES" ]; then
+	echo "BUILD_RUN_MODULES is deprecated - Please use APP_RUN_MODULES";
+	APP_RUN_MODULES="$BUILD_RUN_MODULES";
+fi
+
 # Prepare modules
 for module in ${BUILD_MODULES[@]}; do
 	script="/docker/scripts/modules/${module}/prepare"
@@ -13,6 +29,13 @@ for module in ${BUILD_MODULES[@]}; do
 		echo "Preparing $module entry"
 		"$script"
 	fi
+done
+
+# Entry preparation files
+shopt -s nullglob
+mkdir -p "${APP_ETC_DIR}/prepare.d"
+for filename in "${APP_ETC_DIR}/prepare.d"/*; do
+	(run-user /bin/bash "$filename")
 done
 
 # Entry required modules
@@ -24,15 +47,10 @@ for module in ${BUILD_RUN_MODULES[@]}; do
 	fi
 done
 
-# Function to run as user
-run-user() {
-	sudo -H -E -u me -- $@
-}
-
 # Entry configuration files
 shopt -s nullglob
-mkdir -p "${BUILD_ETC_DIR}/entry.d"
-for filename in "${BUILD_ETC_DIR}/entry.d"/*; do
+mkdir -p "${APP_ETC_DIR}/entry.d"
+for filename in "${APP_ETC_DIR}/entry.d"/*; do
 	(run-user /bin/bash "$filename")
 done
 

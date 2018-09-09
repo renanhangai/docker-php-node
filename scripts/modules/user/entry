@@ -3,20 +3,26 @@
 docker-image-check-permission() {
 	echo "Running as $(whoami)"
 
-	BUILD_PERMISSION_FILE_UID=1000
-	BUILD_PERMISSION_FILE_GID=1000
-	if [ -f "$BUILD_PERMISSION_FILE" ]; then
-		BUILD_PERMISSION_FILE_UID=$(stat -c "%u" "$BUILD_PERMISSION_FILE")
-		BUILD_PERMISSION_FILE_GID=$(stat -c "%g" "$BUILD_PERMISSION_FILE")
+	# Modules to be run
+	if [ -n "$BUILD_PERMISSION_FILE" ]; then
+		echo "BUILD_PERMISSION_FILE is deprecated - Please use APP_PERMISSION_FILE";
+		APP_PERMISSION_FILE="$BUILD_PERMISSION_FILE";
 	fi
-	if [ "${BUILD_PERMISSION_FILE_UID}" != "$(id -u me)" ] || [ "${BUILD_PERMISSION_FILE_GID}" != "$(id -g me)" ]; then
-		groupmod -g "${BUILD_PERMISSION_FILE_GID}" me
-		usermod -u "${BUILD_PERMISSION_FILE_UID}" -g "${BUILD_PERMISSION_FILE_GID}" me
+
+	PERMISSION_FILE_UID=1000
+	PERMISSION_FILE_GID=1000
+	if [ -f "$APP_PERMISSION_FILE" ]; then
+		PERMISSION_FILE_UID=$(stat -c "%u" "$APP_PERMISSION_FILE")
+		PERMISSION_FILE_GID=$(stat -c "%g" "$APP_PERMISSION_FILE")
+	fi
+	if [ "${PERMISSION_FILE_UID}" != "$(id -u me)" ] || [ "${PERMISSION_FILE_GID}" != "$(id -g me)" ]; then
+		groupmod -g "${PERMISSION_FILE_GID}" me
+		usermod -u "${PERMISSION_FILE_UID}" -g "${PERMISSION_FILE_GID}" me
 	fi
 
 	chown -R me:me /home/me
 	chown me:me /app /app/local
-	echo "Permissions: $BUILD_PERMISSION_FILE_UID:$BUILD_PERMISSION_FILE_GID";
+	echo "Permissions: $PERMISSION_FILE_UID:$PERMISSION_FILE_GID";
 }
 
 docker-image-check-permission

@@ -1,6 +1,6 @@
 #!/bin/bash
 
 if [ "$BUILD_PHP_VERSION" == "7.1" ]; then
-	cp "${BUILD_ETC_DIR}/php/php.ini" /etc/php/7.1/fpm/conf.d/50-php.ini
-	cp "${BUILD_ETC_DIR}/php/php.ini" /etc/php/7.1/cli/conf.d/50-php.ini
+	cp "${APP_ETC_DIR}/php/php.ini" /etc/php/7.1/fpm/conf.d/50-php.ini
+	cp "${APP_ETC_DIR}/php/php.ini" /etc/php/7.1/cli/conf.d/50-php.ini
 fi

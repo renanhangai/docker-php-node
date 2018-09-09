@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cp "${BUILD_ETC_DIR}/http/default" /etc/nginx/sites-available/default
+cp "${APP_ETC_DIR}/http/default" /etc/nginx/sites-available/default
 service nginx start
