@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cp "${APP_ETC_DIR}/http/default" /etc/nginx/sites-available/default

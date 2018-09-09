@@ -18,8 +18,8 @@ if [ -n "$BUILD_ETC_DIR" ]; then
 fi
 # Modules to be run
 if [ -n "$BUILD_RUN_MODULES" ]; then
-	echo "BUILD_RUN_MODULES is deprecated - Please use APP_RUN_MODULES";
-	APP_RUN_MODULES="$BUILD_RUN_MODULES";
+	echo "BUILD_RUN_MODULES is deprecated - Please use APP_MODULES";
+	APP_MODULES="$BUILD_RUN_MODULES";
 fi
 
 # Prepare modules
@@ -39,7 +39,7 @@ for filename in "${APP_ETC_DIR}/prepare.d"/*; do
 done
 
 # Entry required modules
-for module in ${BUILD_RUN_MODULES[@]}; do
+for module in ${APP_MODULES[@]}; do
 	script="/docker/scripts/modules/${module}/entry"
 	if [ -f "$script" ]; then
 		echo "Setupping $module entry"
